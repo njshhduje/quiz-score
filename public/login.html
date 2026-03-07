@@ -1,1 +1,35 @@
-
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <input type="text" id="id" placeholder="ID (初期: admin)">
+            <input type="password" id="pw" placeholder="Password (初期: 1234)">
+            <button onclick="login()" style="width:100%; background:var(--primary); color:white;">ログイン</button>
+        </div>
+    </div>
+    <script>
+        async function login() {
+            const id = document.getElementById('id').value;
+            const pw = document.getElementById('pw').value;
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id, pw })
+            });
+            if (res.ok) {
+                sessionStorage.setItem('isAdmin', 'true');
+                location.href = 'admin.html';
+            } else {
+                alert('ログイン失敗！');
+            }
+        }
+    </script>
+</body>
+</html>
