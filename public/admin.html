@@ -8,13 +8,13 @@
 </head>
 <body>
     <header>
-        <div style="font-weight: bold;">⚙️ ADMIN</div>
+        <div style="font-weight: bold;">⚙️ ADMIN PANEL</div>
         <a href="/" style="color:white; text-decoration:none; font-size:0.8rem;">表示画面へ</a>
     </header>
     <div class="container">
         <div id="adminBoard"></div>
-        <div class="login-box" style="margin-top:30px;">
-            <h3>ID/PW 変更</h3>
+        <div class="login-box" style="margin-top:20px;">
+            <h4>ID/PW 変更</h4>
             <input type="text" id="newId" placeholder="New ID">
             <input type="text" id="newPw" placeholder="New PW">
             <button onclick="saveSettings()" class="btn" style="background:#333; width:100%">更新</button>
@@ -32,7 +32,7 @@
                 <div class="player-card admin-card">
                     <div class="admin-row">
                         <input type="text" class="admin-name-input" value="${p.name}" onchange="updateName(${p.id}, this.value)">
-                        <div class="score-display" style="font-size:1.8rem">${p.score}</div>
+                        <div class="score-display" style="font-size:1.6rem">${p.score}</div>
                     </div>
                     <div class="admin-controls">
                         <div class="btn-group">
