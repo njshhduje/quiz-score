@@ -1,22 +1,64 @@
-// admin.htmlのメインロジック抜粋
-function renderAdmin(players) {
-    const board = document.getElementById('board');
-    board.innerHTML = players.map(p => `
-        <div class="score-card">
-            <input type="text" value="${p.name}" onchange="updateName(${p.id}, this.value)">
-            <div class="score">${p.score}</div>
-            <div class="controls">
-                <button class="minus" onclick="changeScore(${p.id}, -10)">-10</button>
-                <button class="plus" onclick="changeScore(${p.id}, 10)">+10</button>
-            </div>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div style="font-weight: bold;">⚙️ ADMIN PANEL</div>
+        <a href="/" style="color:white; text-decoration:none;">表示画面へ</a>
+    </header>
+
+    <div class="container">
+        <div id="adminBoard"></div>
+        
+        <hr>
+        <div class="login-box">
+            <h3>🔑 設定変更</h3>
+            <input type="text" id="newId" placeholder="新しいID">
+            <input type="text" id="newPw" placeholder="新しいパスワード">
+            <button onclick="saveSettings()" style="background:var(--accent); color:white;">ID/PWを更新</button>
         </div>
-    `).join('');
-}
+    </div>
 
-function changeScore(id, diff) {
-    socket.emit('updateScore', { id, diff });
-}
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        if (sessionStorage.getItem('isAdmin') !== 'true') location.href = 'login.html';
+        
+        const socket = io();
+        socket.on('init', renderAdmin);
+        socket.on('update', renderAdmin);
 
-function updateName(id, name) {
-    socket.emit('updateName', { id, name });
-}
+        function renderAdmin(players) {
+            const board = document.getElementById('adminBoard');
+            board.innerHTML = players.map(p => `
+                <div class="player-card">
+                    <div>
+                        <input type="text" value="${p.name}" onchange="updateName(${p.id}, this.value)" style="width:100px; margin:0">
+                        <div class="score-area" style="font-size:1.5rem">${p.score}</div>
+                    </div>
+                    <div class="controls">
+                        <button class="btn-minus" onclick="changeScore(${p.id}, -10)">-10</button>
+                        <button class="btn-minus" onclick="changeScore(${p.id}, -1)">-1</button>
+                        <button class="btn-plus" onclick="changeScore(${p.id}, 1)">+1</button>
+                        <button class="btn-plus" onclick="changeScore(${p.id}, 10)">+10</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function changeScore(id, diff) { socket.emit('updateScore', { id, diff }); }
+        function updateName(id, name) { socket.emit('updateName', { id, name }); }
+        function saveSettings() {
+            const id = document.getElementById('newId').value;
+            const pw = document.getElementById('newPw').value;
+            if(id && pw) {
+                socket.emit('updateSettings', { id, pw });
+                alert('設定を更新しました。次回のログインから有効です。');
+            }
+        }
+    </script>
+</body>
+</html>
