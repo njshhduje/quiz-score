@@ -2,35 +2,29 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Quiz Scoreboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard</title>
     <link rel="stylesheet" href="style.css">
-    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-    <nav>
-        <div>🏆 QUIZ LIVE</div>
-        <div class="menu-btn" onclick="toggleMenu()">☰</div>
-        <div class="nav-links" id="navLinks">
+    <header>
+        <div style="font-weight: bold;">🏆 QUIZ LIVE</div>
+        <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('show')">☰</div>
+        <div class="nav-menu" id="navMenu">
             <a href="login.html">管理者ログイン</a>
         </div>
-    </nav>
-
-    <div class="container" id="board">
-        </div>
-
+    </header>
+    <div class="container" id="board"></div>
+    <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
-        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
-
         socket.on('init', render);
         socket.on('update', render);
-
         function render(players) {
-            const board = document.getElementById('board');
-            board.innerHTML = players.map(p => `
-                <div class="score-card">
-                    <div class="name">${p.name}</div>
-                    <div class="score">${p.score}</div>
+            document.getElementById('board').innerHTML = players.map(p => `
+                <div class="player-card">
+                    <div class="name-label">${p.name}</div>
+                    <div class="score-display">${p.score}</div>
                 </div>
             `).join('');
         }
