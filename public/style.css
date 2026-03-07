@@ -9,31 +9,31 @@
 
 body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; }
 
-header { background: var(--primary); color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+header { background: var(--primary); color: white; padding: 0.8rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
 
 .hamburger { cursor: pointer; font-size: 1.5rem; }
-.nav-menu { display: none; position: absolute; top: 60px; right: 10px; background: white; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1000; }
+.nav-menu { display: none; position: absolute; top: 55px; right: 10px; background: white; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1000; }
 .nav-menu.show { display: block; }
-.nav-menu a { display: block; padding: 15px 20px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; }
+.nav-menu a { display: block; padding: 12px 20px; color: #333; text-decoration: none; font-weight: bold; }
 
-.container { max-width: 500px; margin: 2rem auto; padding: 0 15px; }
+.container { max-width: 500px; margin: 1rem auto; padding: 0 10px; }
 
-/* カードデザイン */
-.player-card { background: var(--white); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+/* プレイヤーカード：6枚並んでも見やすいよう少しスリムに */
+.player-card { background: var(--white); border-radius: 12px; padding: 1rem; margin-bottom: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
 
-.name-label { font-size: 1.2rem; font-weight: bold; }
-.score-display { font-size: 2.5rem; font-weight: bold; color: var(--accent); }
+.name-label { font-size: 1.1rem; font-weight: bold; }
+.score-display { font-size: 2.2rem; font-weight: bold; color: var(--accent); }
 
-/* 管理画面専用スタイル */
-.admin-card { flex-direction: column; align-items: stretch; gap: 15px; }
+/* 管理者画面用 */
+.admin-card { flex-direction: column; align-items: stretch; gap: 10px; }
 .admin-row { display: flex; justify-content: space-between; align-items: center; }
-.admin-name-input { font-size: 1rem; padding: 8px; border: 1px solid #ddd; border-radius: 5px; width: 65%; }
+.admin-name-input { font-size: 1rem; padding: 6px; border: 1px solid #ddd; border-radius: 5px; width: 60%; }
 
-.admin-controls { display: flex; justify-content: space-between; gap: 8px; }
+.admin-controls { display: flex; gap: 5px; }
 .btn-group { display: flex; gap: 4px; flex: 1; }
-.btn { border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; padding: 10px; flex: 1; }
+.btn { border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; padding: 8px; flex: 1; font-size: 0.9rem; }
 .btn-plus { background: var(--success); }
 .btn-minus { background: var(--danger); }
 
-.login-box { background: white; padding: 2rem; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-input[type="text"], input[type="password"] { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+.login-box { background: white; padding: 1.5rem; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+input[type="text"], input[type="password"] { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
