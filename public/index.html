@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Scoreboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <nav>
+        <div>🏆 QUIZ LIVE</div>
+        <div class="menu-btn" onclick="toggleMenu()">☰</div>
+        <div class="nav-links" id="navLinks">
+            <a href="login.html">管理者ログイン</a>
+        </div>
+    </nav>
 
+    <div class="container" id="board">
+        </div>
+
+    <script>
+        const socket = io();
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+
+        socket.on('init', render);
+        socket.on('update', render);
+
+        function render(players) {
+            const board = document.getElementById('board');
+            board.innerHTML = players.map(p => `
+                <div class="score-card">
+                    <div class="name">${p.name}</div>
+                    <div class="score">${p.score}</div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
