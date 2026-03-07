@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -9,9 +10,9 @@
     <div class="container">
         <div class="login-box">
             <h2>Admin Login</h2>
-            <input type="text" id="id" placeholder="ID (初期: admin)">
-            <input type="password" id="pw" placeholder="Password (初期: 1234)">
-            <button onclick="login()" style="width:100%; background:var(--primary); color:white;">ログイン</button>
+            <input type="text" id="id" placeholder="ID">
+            <input type="password" id="pw" placeholder="Password">
+            <button onclick="login()" class="btn btn-plus" style="width:100%">ログイン</button>
         </div>
     </div>
     <script>
@@ -26,9 +27,7 @@
             if (res.ok) {
                 sessionStorage.setItem('isAdmin', 'true');
                 location.href = 'admin.html';
-            } else {
-                alert('ログイン失敗！');
-            }
+            } else { alert('失敗しました'); }
         }
     </script>
 </body>
