@@ -2,22 +2,23 @@ const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
-const path = require('path');
 
 app.use(express.static('public'));
 app.use(express.json());
 
-// 初期データ
+// 初期データを6人に設定
 let gameState = {
     players: [
         { id: 1, name: "Player 1", score: 0 },
         { id: 2, name: "Player 2", score: 0 },
-        { id: 3, name: "Player 3", score: 0 }
+        { id: 3, name: "Player 3", score: 0 },
+        { id: 4, name: "Player 4", score: 0 },
+        { id: 5, name: "Player 5", score: 0 },
+        { id: 6, name: "Player 6", score: 0 }
     ],
-    auth: { id: "admin", pw: "password123" }
+    auth: { id: "admin", pw: "1234" }
 };
 
-// ログインAPI
 app.post('/api/login', (req, res) => {
     const { id, pw } = req.body;
     if (id === gameState.auth.id && pw === gameState.auth.pw) {
@@ -27,19 +28,9 @@ app.post('/api/login', (req, res) => {
     }
 });
 
-// パスワード変更API
-app.post('/api/update-auth', (req, res) => {
-    const { newId, newPw } = req.body;
-    gameState.auth.id = newId;
-    gameState.auth.pw = newPw;
-    res.json({ success: true });
-});
-
 io.on('connection', (socket) => {
-    // 接続時に現在の状態を送信
     socket.emit('init', gameState.players);
 
-    // 点数更新
     socket.on('updateScore', ({ id, diff }) => {
         const player = gameState.players.find(p => p.id === id);
         if (player) {
@@ -48,13 +39,16 @@ io.on('connection', (socket) => {
         }
     });
 
-    // 名前更新
     socket.on('updateName', ({ id, name }) => {
         const player = gameState.players.find(p => p.id === id);
         if (player) {
             player.name = name;
             io.emit('update', gameState.players);
         }
+    });
+
+    socket.on('updateSettings', (newAuth) => {
+        gameState.auth = newAuth;
     });
 });
 
