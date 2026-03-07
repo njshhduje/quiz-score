@@ -1,1 +1,22 @@
+// admin.htmlのメインロジック抜粋
+function renderAdmin(players) {
+    const board = document.getElementById('board');
+    board.innerHTML = players.map(p => `
+        <div class="score-card">
+            <input type="text" value="${p.name}" onchange="updateName(${p.id}, this.value)">
+            <div class="score">${p.score}</div>
+            <div class="controls">
+                <button class="minus" onclick="changeScore(${p.id}, -10)">-10</button>
+                <button class="plus" onclick="changeScore(${p.id}, 10)">+10</button>
+            </div>
+        </div>
+    `).join('');
+}
 
+function changeScore(id, diff) {
+    socket.emit('updateScore', { id, diff });
+}
+
+function updateName(id, name) {
+    socket.emit('updateName', { id, name });
+}
