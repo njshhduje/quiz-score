@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scoreboard</title>
+    <title>Quiz Scoreboard 3x2</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <div style="font-weight: bold;">🏆 QUIZ LIVE</div>
+        <div style="font-size: 1.5rem; letter-spacing: 2px;">🏆 QUIZ CHAMPIONSHIP</div>
         <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('show')">☰</div>
         <div class="nav-menu" id="navMenu">
             <a href="login.html">管理者ログイン</a>
         </div>
     </header>
-    <div class="container" id="board"></div>
+
+    <div class="container" id="board">
+        </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
