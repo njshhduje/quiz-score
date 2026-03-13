@@ -1,68 +1,66 @@
 :root {
-    --bg: #1a1a2e; /* 背景を少し暗くして高級感を */
-    --primary: #16213e;
-    --accent: #e94560;
-    --success: #0f3460;
-    --white: #ffffff;
+    --bg: #f0f2f5;           /* 薄いグレーの背景 */
+    --header: #ffffff;       /* 白いヘッダー */
+    --card: #ffffff;         /* 白いカード */
+    --text-main: #333333;    /* 濃いグレーの文字 */
+    --accent: #007bff;       /* 青（アクセントカラー） */
+    --border: #e0e0e0;       /* 境界線 */
 }
 
-body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); margin: 0; color: var(--white); }
+body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); margin: 0; color: var(--text-main); }
 
-header { background: var(--primary); color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent); }
+header { 
+    background: var(--header); 
+    color: var(--text-main); 
+    padding: 1rem 2rem; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-bottom: 1px solid var(--border);
+}
 
-/* 3列×2行のグリッド設定 */
 .container { 
-    max-width: 1200px; 
+    max-width: 1100px; 
     margin: 2rem auto; 
     padding: 0 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3列 */
-    gap: 20px; /* カード間の隙間 */
+    gap: 25px; 
 }
 
-/* モバイル対応：画面が狭いときは1列にする */
-@media (max-width: 768px) {
-    .container { grid-template-columns: 1fr; }
-}
+@media (max-width: 850px) { .container { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 550px) { .container { grid-template-columns: 1fr; } }
 
-/* プレイヤーカードのデザイン */
 .player-card { 
-    background: var(--primary); 
-    border: 2px solid #30475e;
-    border-radius: 20px; 
-    padding: 2rem; 
+    background: var(--card); 
+    border-radius: 24px; 
+    padding: 2.5rem 1rem; 
     text-align: center;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transition: transform 0.3s;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+    border: 1px solid var(--border);
 }
 
-.player-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+.name-label { font-size: 1.4rem; font-weight: bold; margin-bottom: 10px; color: #666; }
+.score-display { font-size: 5rem; font-weight: 800; color: var(--accent); }
 
-.name-label { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; color: #ccc; }
-.score-display { font-size: 4.5rem; font-weight: 900; color: var(--accent); text-shadow: 0 0 15px rgba(233, 69, 96, 0.5); }
-
-/* 管理画面用の調整（入力欄など） */
-.admin-card { gap: 15px; }
+/* 管理画面用スタイル */
+.admin-card { padding: 1.5rem; }
 .admin-name-input { 
-    background: #0f3460; 
-    color: white; 
-    border: 1px solid var(--accent); 
-    padding: 10px; 
-    border-radius: 8px; 
-    font-size: 1.2rem; 
-    text-align: center;
-    width: 90%;
-    margin: 0 auto;
+    font-size: 1.1rem; padding: 8px; border: 1px solid var(--border); 
+    border-radius: 10px; width: 85%; text-align: center; margin-bottom: 10px;
 }
+.admin-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.btn { border: none; border-radius: 12px; cursor: pointer; font-weight: bold; color: white; padding: 12px; }
+.btn-plus { background: #28a745; }
+.btn-minus { background: #dc3545; }
+.btn:active { transform: scale(0.95); }
 
-.admin-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-.btn { border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: white; padding: 12px; font-size: 1rem; }
-.btn-plus { background: #2ecc71; }
-.btn-minus { background: #e74c3c; }
+/* ログイン・設定用 */
+.login-box { background: white; padding: 2rem; border-radius: 20px; text-align: center; grid-column: 1 / -1; max-width: 350px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+input[type="text"], input[type="password"] { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; }
 
-/* ログイン画面などの共通設定 */
-.login-box { background: var(--primary); padding: 2.5rem; border-radius: 20px; text-align: center; grid-column: 1 / -1; max-width: 400px; margin: 0 auto; }
-input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; }
+.hamburger { cursor: pointer; font-size: 1.5rem; }
+.nav-menu { display: none; position: absolute; top: 60px; right: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; }
+.nav-menu.show { display: block; }
+.nav-menu a { display: block; padding: 15px 25px; color: var(--text-main); text-decoration: none; border-bottom: 1px solid var(--bg); }
