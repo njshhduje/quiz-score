@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Control</title>
+    <title>Admin 3x2</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <div style="font-weight: bold;">⚙️ ADMIN PANEL</div>
-        <a href="/" style="color:white; text-decoration:none; font-size:0.8rem;">表示画面へ</a>
+        <div>⚙️ ADMIN CONTROL</div>
+        <a href="/" style="color:white; text-decoration:none;">表示画面へ</a>
     </header>
+
+    <div class="container" id="adminBoard"></div>
+
     <div class="container">
-        <div id="adminBoard"></div>
-        <div class="login-box" style="margin-top:20px;">
-            <h4>ID/PW 変更</h4>
-            <input type="text" id="newId" placeholder="New ID">
-            <input type="text" id="newPw" placeholder="New PW">
-            <button onclick="saveSettings()" class="btn" style="background:#333; width:100%">更新</button>
+        <div class="login-box">
+            <h3>🔑 セキュリティ設定</h3>
+            <input type="text" id="newId" placeholder="新しいID">
+            <input type="text" id="newPw" placeholder="新しいパスワード">
+            <button onclick="saveSettings()" class="btn" style="background:var(--accent); width:100%; margin-top:10px;">ID/PW 更新</button>
         </div>
     </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
         if (sessionStorage.getItem('isAdmin') !== 'true') location.href = 'login.html';
@@ -30,29 +33,24 @@
         function renderAdmin(players) {
             document.getElementById('adminBoard').innerHTML = players.map(p => `
                 <div class="player-card admin-card">
-                    <div class="admin-row">
-                        <input type="text" class="admin-name-input" value="${p.name}" onchange="updateName(${p.id}, this.value)">
-                        <div class="score-display" style="font-size:1.6rem">${p.score}</div>
-                    </div>
+                    <input type="text" class="admin-name-input" value="${p.name}" onchange="updateName(${p.id}, this.value)">
+                    <div class="score-display" style="font-size:2.5rem">${p.score}</div>
                     <div class="admin-controls">
-                        <div class="btn-group">
-                            <button class="btn btn-minus" onclick="changeScore(${p.id}, -10)">-10</button>
-                            <button class="btn btn-minus" onclick="changeScore(${p.id}, -1)">-1</button>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn btn-plus" onclick="changeScore(${p.id}, 1)">+1</button>
-                            <button class="btn btn-plus" onclick="changeScore(${p.id}, 10)">+10</button>
-                        </div>
+                        <button class="btn btn-minus" onclick="changeScore(${p.id}, -10)">-10</button>
+                        <button class="btn btn-minus" onclick="changeScore(${p.id}, -1)">-1</button>
+                        <button class="btn btn-plus" onclick="changeScore(${p.id}, 1)">+1</button>
+                        <button class="btn btn-plus" onclick="changeScore(${p.id}, 10)">+10</button>
                     </div>
                 </div>
             `).join('');
         }
+
         function changeScore(id, diff) { socket.emit('updateScore', { id, diff }); }
         function updateName(id, name) { socket.emit('updateName', { id, name }); }
         function saveSettings() {
             const id = document.getElementById('newId').value;
             const pw = document.getElementById('newPw').value;
-            if(id && pw) { socket.emit('updateSettings', { id, pw }); alert('更新完了'); }
+            if(id && pw) { socket.emit('updateSettings', { id, pw }); alert('設定を更新しました'); }
         }
     </script>
 </body>
