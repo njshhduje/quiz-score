@@ -16,7 +16,7 @@ let gameState = {
         { id: 5, name: "Player 5", score: 0 },
         { id: 6, name: "Player 6", score: 0 }
     ],
-    auth: { id: "admin", pw: "1234" }
+    auth: { id: "nakanishi", pw: "47364976" }
 };
 
 app.post('/api/login', (req, res) => {
